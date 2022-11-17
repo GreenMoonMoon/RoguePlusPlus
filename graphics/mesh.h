@@ -15,52 +15,14 @@ using glm::vec2;
 using glm::vec3;
 using glm::vec4;
 
-// N64 Data format
-struct Vtx_t {
-#ifndef GBI_FLOATS
-    short		ob[3];	/* x, y, z */
-#else
-    float		ob[3];	/* x, y, z */
-#endif
-    unsigned short	flag;
-    short		tc[2];	/* texture coord */
-    unsigned char	cn[4];	/* color & alpha */
-} ;
-// N64 Data format
-struct Vtx_tn {
-#ifndef GBI_FLOATS
-    short		ob[3];	/* x, y, z */
-#else
-    float		ob[3];	/* x, y, z */
-#endif
-    unsigned short	flag;
-    short		tc[2];	/* texture coord */
-    signed char	n[3];	/* normal */
-    unsigned char   a;      /* alpha  */
-};
-// N64 Data format
-union Vtx {
-    Vtx_t		v;  /* Use this one for colors  */
-    Vtx_tn              n;  /* Use this one for normals */
-    long long int	force_structure_alignment;
-};
-
-
-struct Vertex {
-    vec3 position;
-    vec3 normal;
+struct VertexData {
+    vec2 position;
     vec2 uv;
-    vec4 color;
 };
 
 struct MeshData {
-    std::vector<Vertex> vertices;
+    std::vector<VertexData> vertices;
     std::vector<unsigned int> indices;
-    int indexOffset = 0;
-
-    void AddVertices(const Vtx vtx[], int vtxCount, int);
-    void AddTriangles(int a1, int a2, int a3, int, int b1, int b2, int b3, int);
-    void AddTriangles(int a1, int a2, int a3, int);
 };
 
 struct Mesh {
@@ -74,8 +36,14 @@ struct Mesh {
     void Load(const MeshData &meshData);
 };
 
-Vertex VertexFromVtxColor(const Vtx &vtx) ;
-
-Vertex VertexFromVtxNormal(const Vtx &vtx);
+/// Generic quad geometry
+/// TODO: move to the cpp file and add a function to quickly load it based on some parameters
+const MeshData Quad{
+        .vertices = {{vec2(-1.0f, -1.0f), vec2(0.0f, 0.0f)},
+                     {vec2(1.0f, -1.0f),  vec2(1.0f, 0.0f)},
+                     {vec2(1.0f, 1.0f),   vec2(1.0f, 1.0f)},
+                     {vec2(-1.0f, 1.0f),  vec2(0.0f, 1.0f)}},
+        .indices = {0, 3, 2, 0, 2, 1}
+};
 
 #endif // SM64_MESH_H
