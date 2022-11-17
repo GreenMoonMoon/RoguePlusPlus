@@ -5,6 +5,9 @@
 #include "inputs/inputs.h"
 
 #include "graphics/mesh.h"
+#include "graphics/model.h"
+#include "graphics/textures.h"
+#include "graphics/shader_data.h"
 
 bool isRunning = true;
 flecs::world world;
@@ -19,19 +22,17 @@ int main(int argc, char **argv) {
                 input.ProcessEvents(isRunning);
             });
 
-
-    //Debug
-    // TODO: review this encapsulation, there is a better way to load builtin geo that could
-    //  be done in a single step
-    Mesh quad;
-    quad.Load(Quad);
-
+    //DEBUG
+    Model m;
+    m.Load({{"C:/Users/josue/Projects/rpp/assets/kenney_physic_pack/PNG/Wood elements/elementWood013.png"},
+            Quad,
+            DebugShader});
 
     while(isRunning) {
         renderer.Clear();
         world.progress();
 
-        renderer.RenderMesh(quad); //TODO: change name to draw
+        m.Draw(camera, renderer);
 
         renderer.Present();
     }
