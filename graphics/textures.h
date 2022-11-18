@@ -1,5 +1,5 @@
-#ifndef SM64_TEXTURES_H
-#define SM64_TEXTURES_H
+#ifndef RPP_TEXTURES_H
+#define RPP_TEXTURES_H
 
 #include "glad/gl.h"
 
@@ -23,4 +23,4 @@ struct Texture {
     void Use(int index);
 };
 
-#endif // SM64_TEXTURES_H
+#endif // RPP_TEXTURES_H

@@ -1,5 +1,5 @@
-#ifndef SM64_SHADER_H
-#define SM64_SHADER_H
+#ifndef RPP_SHADER_H
+#define RPP_SHADER_H
 
 #include "glm/glm.hpp"
 #include "glad/gl.h"
@@ -43,4 +43,4 @@ struct Shader {
     static unsigned int linkProgram(const unsigned int vertexShader, const unsigned int fragmentShader);
 };
 
-#endif // SM64_SHADER_H
+#endif // RPP_SHADER_H

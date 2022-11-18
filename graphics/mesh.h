@@ -1,5 +1,5 @@
-#ifndef SM64_MESH_H
-#define SM64_MESH_H
+#ifndef RPP_MESH_H
+#define RPP_MESH_H
 
 #include "shader.h"
 #include "textures.h"
@@ -46,4 +46,4 @@ const MeshData Quad{
         .indices = {0, 3, 2, 0, 2, 1}
 };
 
-#endif // SM64_MESH_H
+#endif // RPP_MESH_H

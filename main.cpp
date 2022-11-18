@@ -6,8 +6,12 @@
 
 #include "graphics/mesh.h"
 #include "graphics/model.h"
-#include "graphics/textures.h"
+#include "graphics/camera.h"
 #include "graphics/shader_data.h"
+
+#include "glm/glm.hpp"
+
+using glm::vec2;
 
 bool isRunning = true;
 flecs::world world;
@@ -24,15 +28,17 @@ int main(int argc, char **argv) {
 
     //DEBUG
     Model m;
-    m.Load({{"C:/Users/josue/Projects/rpp/assets/kenney_physic_pack/PNG/Wood elements/elementWood013.png"},
+    m.Load({{"C:/Users/josue/Projects/rpp/assets/kenney_physic_pack/PNG/Wood elements/elementWood010.png"},
             Quad,
             DebugShader});
 
+    auto cam = Camera(vec2(720.0f, 576.0f) * 0.02857f);
+
     while(isRunning) {
         renderer.Clear();
-        world.progress();
 
-        m.Draw(camera, renderer);
+        world.progress();
+        m.Draw(cam, renderer);
 
         renderer.Present();
     }

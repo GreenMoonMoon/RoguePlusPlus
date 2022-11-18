@@ -1,11 +1,13 @@
-#ifndef SM64_MODEL_H
-#define SM64_MODEL_H
+#ifndef RPP_MODEL_H
+#define RPP_MODEL_H
 
 #include "textures.h"
 #include "mesh.h"
 #include "shader.h"
 
 #include <memory>
+
+struct Camera;
 
 /// ModelData only represent raw object data that can be loaded at runtime.
 struct ModelData {
@@ -25,4 +27,4 @@ struct Model{
     void Draw(const Camera &camera, Renderer &renderer);
 };
 
-#endif // SM64_MODEL_H
+#endif // RPP_MODEL_H

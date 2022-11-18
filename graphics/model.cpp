@@ -1,4 +1,5 @@
 #include "model.h"
+#include "camera.h"
 
 void Model::Load(const ModelData &modelData) {
     texture.Load(modelData.textureData);
@@ -10,10 +11,8 @@ void Model::Load(const ModelData &modelData) {
 
 void Model::Draw(const Camera &camera, Renderer &renderer) {
     texture.Use(0);
-
     shader->Use();
-    auto mvp = camera.projection * camera.transform;
-    shader->SetMvpUniform(mvp);
 
+    shader->SetMvpUniform(camera.view);
     renderer.RenderMesh(mesh);
 }

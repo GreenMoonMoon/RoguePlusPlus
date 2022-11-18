@@ -15,6 +15,8 @@ void Texture::Load(const TextureData &textureData) {
     if(data != nullptr){
         glGenTextures(1, &handle);
         glBindTexture(GL_TEXTURE_2D, handle);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
 
         switch(channelCount){
             case 3:
@@ -27,6 +29,7 @@ void Texture::Load(const TextureData &textureData) {
                 glDeleteTextures(1, &handle);
                 break;
         }
+
     } else {
         std::cerr << "Error could not open image: " << textureData.path << std::endl;
     }

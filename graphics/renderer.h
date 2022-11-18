@@ -1,5 +1,5 @@
-#ifndef SM64_RENDERER_H
-#define SM64_RENDERER_H
+#ifndef RPP_RENDERER_H
+#define RPP_RENDERER_H
 
 #include "glad/gl.h"
 #include "SDL.h"
@@ -24,4 +24,4 @@ struct SDLRenderer {
 using Renderer = SDLRenderer;
 #endif
 
-#endif // SM64_RENDERER_H
+#endif // RPP_RENDERER_H
