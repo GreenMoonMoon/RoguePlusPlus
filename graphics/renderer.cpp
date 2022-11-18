@@ -1,6 +1,7 @@
 #include "renderer.h"
 #include "shader.h"
 #include "mesh.h"
+#include "texture.h"
 #include "camera.h"
 
 #include "glm/glm.hpp"
@@ -9,6 +10,38 @@
 #include <iostream>
 
 using glm::vec4;
+
+GLenum glCheckError_(const char* file, int line) {
+    GLenum errorCode;
+    while ((errorCode = glGetError()) != GL_NO_ERROR) {
+        const char* error;
+        switch (errorCode) {
+            case GL_INVALID_ENUM:
+                error = "INVALID_ENUM";
+                break;
+            case GL_INVALID_VALUE:
+                error = "INVALID_VALUE";
+                break;
+            case GL_INVALID_OPERATION:
+                error = "INVALID_OPERATION";
+                break;
+            case GL_STACK_OVERFLOW:
+                error = "STACK_OVERFLOW";
+                break;
+            case GL_STACK_UNDERFLOW:
+                error = "STACK_UNDERFLOW";
+                break;
+            case GL_OUT_OF_MEMORY:
+                error = "OUT_OF_MEMORY";
+                break;
+            case GL_INVALID_FRAMEBUFFER_OPERATION:
+                error = "INVALID_FRAMEBUFFER_OPERATION";
+                break;
+        }
+        std::cerr << error << '|' << file << '|' << line << std::endl;
+    }
+    return errorCode;
+}
 
 void debugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const char* message, const void *parameters) {
     const GLubyte *sourceStr = glGetString(source);
@@ -88,14 +121,16 @@ void SDLRenderer::Present() const {
     SDL_GL_SwapWindow(window);
 }
 
-void SDLRenderer::RenderMesh(const Mesh &mesh) {
-    glBindVertexArray(mesh.vao);
+void SDLRenderer::Draw(const Camera &camera, const Mesh &mesh, const Shader &shader, const Texture &texture) const {
+    mesh.Use();
+    glCheckError();
+    shader.Use();
+    glCheckError();
+    texture.Use(0);
+    glCheckError();
+
+    shader.SetMvpUniform(camera.view);
+    glCheckError();
     glDrawElements(GL_TRIANGLES, mesh.triangleCount, GL_UNSIGNED_INT, 0);
+    glCheckError();
 }
-
-
-//void SDLRenderer::RenderMeshWireframe(const Shader &shader, const Mesh &mesh){
-//    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-//    RenderMesh(shader, mesh);
-//    glPolygonMode(GL_FRONT, GL_TRIANGLES);
-//}

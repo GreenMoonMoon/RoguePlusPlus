@@ -1,4 +1,4 @@
-#include "textures.h"
+#include "texture.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
@@ -6,7 +6,7 @@
 #include <iostream>
 
 
-void Texture::Load(const TextureData &textureData) {
+Texture::Texture(const TextureData &textureData) {
     unsigned char *data = stbi_load(textureData.path,
                                     &width,
                                     &height,
@@ -35,6 +35,7 @@ void Texture::Load(const TextureData &textureData) {
     }
 
     stbi_image_free(data);
+    GenerateMipmap();
 }
 
 Texture::~Texture() {
@@ -48,8 +49,7 @@ void Texture::GenerateMipmap() {
     glGenerateMipmap(GL_TEXTURE_2D);
 }
 
-void Texture::Use(int index) {
+void Texture::Use(int index) const {
     glActiveTexture(GL_TEXTURE0 + index);
     glBindTexture(GL_TEXTURE_2D, handle);
-
 }

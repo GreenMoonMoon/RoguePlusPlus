@@ -18,20 +18,17 @@ static const char *basicDiffuseVertexSource = "#version 460 core\nlayout (locati
 // language=GLSL
 static const char *basicDiffuseFragmentSource = "#version 460 core\nin vec3 vertexColor;\nin vec2 uv;\n\nuniform sampler2D tex;\n\nout vec4 FragColor;\n\nvoid main()\n{\n    vec4 color = texture(tex, uv);\n    FragColor = vec4(color.rgb, 1.0f);\n}";
 
-const ShaderData DebugShader = {
-    ShadingType::DEBUG,
+ShaderData ShaderData::Debug = {
     debugVertexSource,
     debugFragmentSource
 };
 
-const ShaderData BasicShader = {
-    ShadingType::BASIC,
+ShaderData ShaderData::Basic = {
     basicVertexSource,
     basicFragmentSource
 };
 
-const ShaderData BasicDiffuseShader = {
-    ShadingType::BASIC_DIFFUSE,
+ShaderData ShaderData::BasicDiffuse = {
     basicDiffuseVertexSource,
     basicDiffuseFragmentSource
 };

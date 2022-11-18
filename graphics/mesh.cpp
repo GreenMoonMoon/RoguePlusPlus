@@ -1,6 +1,6 @@
 #include "mesh.h"
 
-void Mesh::Load(const MeshData &meshData) {
+Mesh::Mesh(const MeshData &meshData) {
     glGenVertexArrays(1, &vao);
     glGenBuffers(1, &vbo);
     glGenBuffers(1, &ebo);
@@ -50,3 +50,15 @@ Mesh::~Mesh() {
     glDeleteBuffers(1, &vbo);
     glDeleteBuffers(1, &ebo);
 }
+
+void Mesh::Use() const {
+    glBindVertexArray(vao);
+}
+
+MeshData MeshData::Quad{
+        .vertices = {{vec2(-1.0f, -1.0f), vec2(0.0f, 0.0f)},
+                     {vec2(1.0f, -1.0f),  vec2(1.0f, 0.0f)},
+                     {vec2(1.0f, 1.0f),   vec2(1.0f, 1.0f)},
+                     {vec2(-1.0f, 1.0f),  vec2(0.0f, 1.0f)}},
+        .indices = {0, 3, 2, 0, 2, 1}
+};

@@ -31,10 +31,11 @@ set(rpp_SOURCE_FILES
 
         graphics/camera.cpp
         graphics/mesh.cpp
-        graphics/model.cpp
         graphics/renderer.cpp
         graphics/shader.cpp
-        graphics/textures.cpp
+        graphics/texture.cpp
+
+        maths/vector.cpp
 
         inputs/inputs.cpp)
 

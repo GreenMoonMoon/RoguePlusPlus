@@ -3,8 +3,6 @@
 
 #include <iostream>
 
-std::map<ShadingType, std::shared_ptr<Shader>> Shader::shaders;
-
 void Shader::validateShader(unsigned int shader) {
     int success;
     char infoLog[512];
@@ -48,22 +46,15 @@ unsigned int Shader::linkProgram(const unsigned int vertexShader, const unsigned
     return shaderProgram;
 }
 
-Shader::~Shader() {
-    glDeleteProgram(handle);
+Shader::Shader(const ShaderData &shaderData) {
+    unsigned int vertexShader = Shader::compileShader(shaderData.vertexSource, GL_VERTEX_SHADER);
+    unsigned int fragmentShader = Shader::compileShader(shaderData.fragmentSource, GL_FRAGMENT_SHADER);
+    handle = Shader::linkProgram(vertexShader, fragmentShader);
+    mvpLocation = glGetUniformLocation(handle, "mvp");
 }
 
-std::shared_ptr<Shader> Shader::Load(const ShaderData &shaderData) {
-    if(!shaders.contains(shaderData.type)) {
-        unsigned int vertexShader = Shader::compileShader(shaderData.vertexSource, GL_VERTEX_SHADER);
-        unsigned int fragmentShader =
-            Shader::compileShader(shaderData.fragmentSource, GL_FRAGMENT_SHADER);
-        unsigned handle = Shader::linkProgram(vertexShader, fragmentShader);
-        int mvpLocation = glGetUniformLocation(handle, "mvp");
-
-        shaders.emplace(shaderData.type, std::make_shared<Shader>(handle, mvpLocation));
-    }
-
-    return shaders[shaderData.type];
+Shader::~Shader() {
+    glDeleteProgram(handle);
 }
 
 void Shader::SetMvpUniform(const mat4 &mvp) const {

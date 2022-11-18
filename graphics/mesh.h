@@ -2,7 +2,7 @@
 #define RPP_MESH_H
 
 #include "shader.h"
-#include "textures.h"
+#include "texture.h"
 #include "renderer.h"
 #include "camera.h"
 #include "glad/gl.h"
@@ -23,27 +23,20 @@ struct VertexData {
 struct MeshData {
     std::vector<VertexData> vertices;
     std::vector<unsigned int> indices;
+
+    static MeshData Quad;
 };
 
 struct Mesh {
-    unsigned int vao;
-    unsigned int vbo;
-    unsigned int ebo;
-    unsigned int triangleCount;
+    unsigned int vao = 0;
+    unsigned int vbo = 0;
+    unsigned int ebo = 0;
+    unsigned int triangleCount = 0;
 
+    explicit Mesh(const MeshData &meshData);
     ~Mesh();
 
-    void Load(const MeshData &meshData);
-};
-
-/// Generic quad geometry
-/// TODO: move to the cpp file and add a function to quickly load it based on some parameters
-const MeshData Quad{
-        .vertices = {{vec2(-1.0f, -1.0f), vec2(0.0f, 0.0f)},
-                     {vec2(1.0f, -1.0f),  vec2(1.0f, 0.0f)},
-                     {vec2(1.0f, 1.0f),   vec2(1.0f, 1.0f)},
-                     {vec2(-1.0f, 1.0f),  vec2(0.0f, 1.0f)}},
-        .indices = {0, 3, 2, 0, 2, 1}
+    void Use() const;
 };
 
 #endif // RPP_MESH_H
