@@ -61,6 +61,6 @@ void Shader::SetMvpUniform(const mat4 &mvp) const {
     glUniformMatrix4fv(mvpLocation, 1, GL_FALSE, glm::value_ptr(mvp));
 }
 
-void Shader::Use() const {
+void Shader::Bind() const {
     glUseProgram(handle);
 }

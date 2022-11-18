@@ -51,7 +51,7 @@ Mesh::~Mesh() {
     glDeleteBuffers(1, &ebo);
 }
 
-void Mesh::Use() const {
+void Mesh::Bind() const {
     glBindVertexArray(vao);
 }
 

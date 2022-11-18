@@ -27,7 +27,7 @@ struct Shader {
     ~Shader();
 
     void SetMvpUniform(const mat4 &mvp) const;
-    void Use() const;
+    void Bind() const;
 
     static void validateShader(unsigned int shader);
     static unsigned int compileShader(const char* source, GLenum type);

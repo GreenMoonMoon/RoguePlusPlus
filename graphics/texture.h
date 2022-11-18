@@ -19,7 +19,7 @@ struct Texture {
     ~Texture();
 
     void GenerateMipmap();
-    void Use(int index) const;
+    void Bind(int index) const;
 };
 
 #endif // RPP_TEXTURE_H

@@ -35,7 +35,7 @@ set(rpp_SOURCE_FILES
         graphics/shader.cpp
         graphics/texture.cpp
 
-        maths/vector.cpp
+        types/vector.cpp
 
         inputs/inputs.cpp)
 
@@ -51,3 +51,5 @@ add_custom_command(TARGET rpp POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
         ${PROJECT_SOURCE_DIR}/${sdl_LIBRARY_DIR}/SDL2.dll
         $<TARGET_FILE_DIR:rpp>)
+
+add_subdirectory(tests)

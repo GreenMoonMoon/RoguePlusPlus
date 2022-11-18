@@ -49,7 +49,7 @@ void Texture::GenerateMipmap() {
     glGenerateMipmap(GL_TEXTURE_2D);
 }
 
-void Texture::Use(int index) const {
+void Texture::Bind(int index) const {
     glActiveTexture(GL_TEXTURE0 + index);
     glBindTexture(GL_TEXTURE_2D, handle);
 }

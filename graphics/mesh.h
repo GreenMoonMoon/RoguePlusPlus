@@ -36,7 +36,7 @@ struct Mesh {
     explicit Mesh(const MeshData &meshData);
     ~Mesh();
 
-    void Use() const;
+    void Bind() const;
 };
 
 #endif // RPP_MESH_H

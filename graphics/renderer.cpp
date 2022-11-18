@@ -122,11 +122,11 @@ void SDLRenderer::Present() const {
 }
 
 void SDLRenderer::Draw(const Camera &camera, const Mesh &mesh, const Shader &shader, const Texture &texture) const {
-    mesh.Use();
+    mesh.Bind();
     glCheckError();
-    shader.Use();
+    shader.Bind();
     glCheckError();
-    texture.Use(0);
+    texture.Bind(0);
     glCheckError();
 
     shader.SetMvpUniform(camera.view);
