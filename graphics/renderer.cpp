@@ -123,14 +123,16 @@ void SDLRenderer::Present() const {
 
 void SDLRenderer::Draw(const Camera &camera, const Mesh &mesh, const Shader &shader, const Texture &texture) const {
     mesh.Bind();
-    glCheckError();
     shader.Bind();
-    glCheckError();
     texture.Bind(0);
-    glCheckError();
 
     shader.SetMvpUniform(camera.view);
-    glCheckError();
     glDrawElements(GL_TRIANGLES, mesh.triangleCount, GL_UNSIGNED_INT, 0);
-    glCheckError();
+}
+
+void SDLRenderer::DrawPoints(const Camera &camera, const Mesh &mesh, const Shader &shader) {
+    mesh.Bind();
+    shader.Bind();
+    shader.SetMvpUniform(camera.view);
+    glDrawArrays(GL_LINES, 0, mesh.vertexCount);
 }

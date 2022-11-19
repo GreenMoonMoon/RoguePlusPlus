@@ -38,7 +38,8 @@ int main(int argc, char **argv) {
             .term_at(2).singleton()
             .kind(flecs::OnStore)
             .each([&](const Tile &tile, const Camera &camera){
-                renderer.Draw(camera, mesh, shader, texture);
+//                renderer.Draw(camera, mesh, shader, texture);
+                renderer.DrawPoints(camera, mesh, shader);
             });
 
     auto tile = world.entity();

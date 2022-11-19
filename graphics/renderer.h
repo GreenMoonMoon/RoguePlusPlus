@@ -22,6 +22,7 @@ struct SDLRenderer {
     void Present() const;
 
     void Draw(const Camera &camera, const Mesh &mesh, const Shader &shader, const Texture &texture) const;
+    void DrawPoints(const Camera &camera, const Mesh &mesh, const Shader &shader);
 };
 
 #ifdef SDL_OPENGL_GRAPHICS

@@ -32,6 +32,7 @@ struct Mesh {
     unsigned int vbo = 0;
     unsigned int ebo = 0;
     unsigned int triangleCount = 0;
+    unsigned int vertexCount = 0;
 
     explicit Mesh(const MeshData &meshData);
     ~Mesh();

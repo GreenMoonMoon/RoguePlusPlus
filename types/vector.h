@@ -1,7 +1,3 @@
-//
-// Created by josue on 2022-11-18.
-//
-
 #ifndef RPP_VECTOR_H
 #define RPP_VECTOR_H
 
@@ -23,6 +19,8 @@ struct Vector2 {
     [[nodiscard]] Vector2 Perpendicular() const;
 
     [[nodiscard]] Vector2 Normalized() const;
+
+    void Normalize();
 
     inline Vector2 operator+(const Vector2 &other) const {
         return {x + other.x, y + other.y};
@@ -60,6 +58,8 @@ struct Vector3 {
     [[nodiscard]] Vector3 Cross(const Vector3 &other) const;
 
     [[nodiscard]] Vector3 Normalized() const;
+
+    void Normalize();
 
     inline Vector3 operator+(const Vector3 &other) const {
         return {x + other.x, y + other.y, z + other.z};

@@ -17,6 +17,7 @@ Mesh::Mesh(const MeshData &meshData) {
                  meshData.indices.data(),
                  GL_STATIC_DRAW);
     triangleCount = meshData.indices.size();
+    vertexCount = meshData.vertices.size();
 
     // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex
     // attributes(s).

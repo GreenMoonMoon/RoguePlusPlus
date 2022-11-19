@@ -23,6 +23,12 @@ Vector2 Vector2::Normalized() const {
     return {x / length, y / length};
 }
 
+void Vector2::Normalize() {
+    auto length = Length();
+    x /= length;
+    y /= length;
+}
+
 float Vector3::SquaredLength() const {
     return x * x + y * y + z * z;
 }
@@ -42,5 +48,13 @@ Vector3 Vector3::Cross(const Vector3 &other) const {
 }
 
 Vector3 Vector3::Normalized() const {
+    auto length = Length();
+    return {x / length, y / length, z / length};
+}
 
+void Vector3::Normalize() {
+    auto length = Length();
+    x /= length;
+    y /= length;
+    z /= length;
 }
