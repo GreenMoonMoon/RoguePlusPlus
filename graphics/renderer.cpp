@@ -5,7 +5,6 @@
 #include "camera.h"
 
 #include "glm/glm.hpp"
-#include "glm/gtc/type_ptr.hpp"
 
 #include <iostream>
 
@@ -130,9 +129,10 @@ void SDLRenderer::Draw(const Camera &camera, const Mesh &mesh, const Shader &sha
     glDrawElements(GL_TRIANGLES, mesh.triangleCount, GL_UNSIGNED_INT, 0);
 }
 
-void SDLRenderer::DrawPoints(const Camera &camera, const Mesh &mesh, const Shader &shader) {
-    mesh.Bind();
+void SDLRenderer::DrawSprite (const Camera &camera, const Sprite &sprite, const Shader &shader) {
+    glEnable(GL_PROGRAM_POINT_SIZE);
+    sprite.Bind();
     shader.Bind();
     shader.SetMvpUniform(camera.view);
-    glDrawArrays(GL_LINES, 0, mesh.vertexCount);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }

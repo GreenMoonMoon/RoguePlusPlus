@@ -1,12 +1,11 @@
-#include <iostream>
-
 #include "flecs.h"
 #include "graphics/renderer.h"
 #include "inputs/inputs.h"
 
+#include "graphics/texture.h"
 #include "graphics/mesh.h"
 #include "graphics/camera.h"
-#include "graphics/shader_data.h"
+#include "graphics/shader.h"
 
 #include "components/tile.hpp"
 
@@ -19,13 +18,25 @@ flecs::world world;
 
 int main(int argc, char **argv) {
     Renderer renderer;
-    Mesh mesh = Mesh(MeshData::Quad);
-    Shader shader = Shader(ShaderData::Debug);
+//    Mesh mesh = Mesh(MeshData::Quad);
+//    Shader shader = Shader(ShaderData::Debug);
+//    TextureData textureData {"C:/Users/josue/Projects/rpp/assets/kenney_physic_pack/PNG/Wood elements/elementWood010.png"};
+//    Texture texture = Texture(textureData);
 
-    TextureData textureData {"C:/Users/josue/Projects/rpp/assets/kenney_physic_pack/PNG/Wood elements/elementWood010.png"};
-    Texture texture = Texture(textureData);
+    ShaderData shaderData;
+    shaderData.LoadFromFiles("C:/Users/josue/Projects/rpp/assets/shaders/point_shader.vert",
+                             "C:/Users/josue/Projects/rpp/assets/shaders/point_shader.frag");
+    Shader   shader = Shader(shaderData);
 
     world.emplace<Camera>(vec2(720.0f, 576.0f) * 0.02857f);
+
+    // DEBUG PARTICLE
+    world.scope<ParticleScope>([](){
+        world.entity()
+        .add<Particle>()
+        .add<Sprite>();
+    });
+    // DEBUG
 
     world.set<Input>({});
     world.system<Input>("Input")
@@ -34,12 +45,12 @@ int main(int argc, char **argv) {
                 input.ProcessEvents(isRunning);
             });
 
-    world.system<const Tile, const Camera>()
-            .term_at(2).singleton()
+    world.system<const Particle, const Sprite, const Camera>()
+            .term_at(3).singleton()
             .kind(flecs::OnStore)
-            .each([&](const Tile &tile, const Camera &camera){
+            .each([&](const Particle &particle, const Sprite &sprite, const Camera &camera){
 //                renderer.Draw(camera, mesh, shader, texture);
-                renderer.DrawPoints(camera, mesh, shader);
+                renderer.DrawSprite(camera, sprite, shader);
             });
 
     auto tile = world.entity();

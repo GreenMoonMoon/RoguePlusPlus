@@ -1,6 +1,8 @@
 #ifndef RPP_SHADER_H
 #define RPP_SHADER_H
 
+#include "shader_data.hpp"
+
 #include "glm/glm.hpp"
 #include "glad/gl.h"
 
@@ -10,14 +12,7 @@
 
 using glm::mat4;
 
-struct ShaderData {
-    const char *vertexSource;
-    const char *fragmentSource;
-
-    static ShaderData Debug;
-    static ShaderData Basic;
-    static ShaderData BasicDiffuse;
-};
+struct ShaderData;
 
 struct Shader {
     unsigned int handle = 0;

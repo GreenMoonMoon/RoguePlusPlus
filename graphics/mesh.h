@@ -1,11 +1,6 @@
 #ifndef RPP_MESH_H
 #define RPP_MESH_H
 
-#include "shader.h"
-#include "texture.h"
-#include "renderer.h"
-#include "camera.h"
-#include "glad/gl.h"
 #include "glm/glm.hpp"
 
 #include <vector>
@@ -36,6 +31,24 @@ struct Mesh {
 
     explicit Mesh(const MeshData &meshData);
     ~Mesh();
+
+    void Bind() const;
+};
+
+struct ParticleScope {};
+
+struct Particle {
+    vec2 position;
+    vec2 velocity;
+    vec2 acceleration;
+    float mass;
+ };
+
+struct Sprite {
+    unsigned int vao = 0;
+
+    explicit Sprite();
+    ~Sprite();
 
     void Bind() const;
 };

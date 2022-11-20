@@ -47,8 +47,8 @@ unsigned int Shader::linkProgram(const unsigned int vertexShader, const unsigned
 }
 
 Shader::Shader(const ShaderData &shaderData) {
-    unsigned int vertexShader = Shader::compileShader(shaderData.vertexSource, GL_VERTEX_SHADER);
-    unsigned int fragmentShader = Shader::compileShader(shaderData.fragmentSource, GL_FRAGMENT_SHADER);
+    unsigned int vertexShader = Shader::compileShader(shaderData.vertexSource.c_str(), GL_VERTEX_SHADER);
+    unsigned int fragmentShader = Shader::compileShader(shaderData.fragmentSource.c_str(), GL_FRAGMENT_SHADER);
     handle = Shader::linkProgram(vertexShader, fragmentShader);
     mvpLocation = glGetUniformLocation(handle, "mvp");
 }

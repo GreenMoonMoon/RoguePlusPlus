@@ -1,4 +1,5 @@
 #include "mesh.h"
+#include "glad/gl.h"
 
 Mesh::Mesh(const MeshData &meshData) {
     glGenVertexArrays(1, &vao);
@@ -63,3 +64,39 @@ MeshData MeshData::Quad{
                      {vec2(-1.0f, 1.0f),  vec2(0.0f, 1.0f)}},
         .indices = {0, 3, 2, 0, 2, 1}
 };
+
+Sprite::Sprite() {
+    unsigned int ebo;
+    unsigned int vbo;
+
+    glGenVertexArrays(1, &vao);
+    glGenBuffers(1, &vbo);
+    glGenBuffers(1, &ebo);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, 4 * sizeof(VertexData), MeshData::Quad.vertices.data(), GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), MeshData::Quad.indices.data(), GL_STATIC_DRAW);
+
+    glBindVertexArray(vao);
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(VertexData), (void *) 0);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(VertexData), (void *) (2 * sizeof(float)));
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0 );
+}
+
+
+Sprite::~Sprite(){
+    glBindVertexArray(vao);
+}
+
+void Sprite::Bind() const {
+    glBindVertexArray(vao);
+}

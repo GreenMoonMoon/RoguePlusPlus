@@ -5,6 +5,7 @@
 #include "SDL.h"
 
 struct Mesh;
+struct Sprite;
 struct Shader;
 struct Texture;
 struct Camera;
@@ -22,7 +23,7 @@ struct SDLRenderer {
     void Present() const;
 
     void Draw(const Camera &camera, const Mesh &mesh, const Shader &shader, const Texture &texture) const;
-    void DrawPoints(const Camera &camera, const Mesh &mesh, const Shader &shader);
+    void DrawSprite(const Camera &camera, const Sprite &sprite, const Shader &shader);
 };
 
 #ifdef SDL_OPENGL_GRAPHICS
