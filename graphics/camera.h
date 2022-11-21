@@ -4,14 +4,11 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
-using glm::vec2;
-using glm::mat4;
-
 struct Camera {
-    vec2 halfSize;
-    mat4 view;
+    glm::vec2 halfSize;
+    glm::mat4 view;
 
-    Camera(vec2 viewportSize);
+    Camera(glm::vec2 viewportSize);
     ~Camera() = default;
 };
 

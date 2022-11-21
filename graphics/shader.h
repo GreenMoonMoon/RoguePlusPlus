@@ -10,18 +10,18 @@
 #include <string>
 #include <memory>
 
-using glm::mat4;
-
 struct ShaderData;
 
 struct Shader {
     unsigned int handle = 0;
-    int mvpLocation = -1;
+    int transformLocation = -1;
+    int cameraLocation = -1;
 
     explicit Shader(const ShaderData &shaderData );
     ~Shader();
 
-    void SetMvpUniform(const mat4 &mvp) const;
+    void SetTransformUniform(const glm::mat4 &transform) const;
+    void SetCameraUniform(const glm::mat4 &camera) const;
     void Bind() const;
 
     static void validateShader(unsigned int shader);

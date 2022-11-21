@@ -11,8 +11,6 @@
 
 #include "glm/glm.hpp"
 
-using glm::vec2;
-
 bool isRunning = true;
 flecs::world world;
 
@@ -28,12 +26,12 @@ int main(int argc, char **argv) {
                              "C:/Users/josue/Projects/rpp/assets/shaders/point_shader.frag");
     Shader   shader = Shader(shaderData);
 
-    world.emplace<Camera>(vec2(720.0f, 576.0f) * 0.02857f);
+    world.emplace<Camera>(glm::vec2(720.0f, 576.0f) * 0.02857f);
 
     // DEBUG PARTICLE
     world.scope<ParticleScope>([](){
         world.entity()
-        .add<Particle>()
+        .set<Particle>({glm::vec2(1.0f), glm::vec2(1.0f), glm::vec2(0.0f)})
         .add<Sprite>();
     });
     // DEBUG
@@ -45,12 +43,19 @@ int main(int argc, char **argv) {
                 input.ProcessEvents(isRunning);
             });
 
+    world.system<Particle>()
+            .kind(flecs::OnUpdate)
+            .each([](Particle &particle){
+                particle.position += particle.velocity;
+            });
+
     world.system<const Particle, const Sprite, const Camera>()
             .term_at(3).singleton()
             .kind(flecs::OnStore)
             .each([&](const Particle &particle, const Sprite &sprite, const Camera &camera){
-//                renderer.Draw(camera, mesh, shader, texture);
-                renderer.DrawSprite(camera, sprite, shader);
+                glm::mat4 transform = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
+                transform = glm::translate(transform, glm::vec3(particle.position, 0.0f));
+                renderer.DrawSprite(transform, camera.view, sprite, shader);
             });
 
     auto tile = world.entity();

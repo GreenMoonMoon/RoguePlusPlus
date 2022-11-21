@@ -1,14 +1,11 @@
+#include <iostream>
+
 #include "renderer.h"
 #include "shader.h"
 #include "mesh.h"
 #include "texture.h"
 #include "camera.h"
 
-#include "glm/glm.hpp"
-
-#include <iostream>
-
-using glm::vec4;
 
 GLenum glCheckError_(const char* file, int line) {
     GLenum errorCode;
@@ -120,19 +117,11 @@ void SDLRenderer::Present() const {
     SDL_GL_SwapWindow(window);
 }
 
-void SDLRenderer::Draw(const Camera &camera, const Mesh &mesh, const Shader &shader, const Texture &texture) const {
-    mesh.Bind();
-    shader.Bind();
-    texture.Bind(0);
-
-    shader.SetMvpUniform(camera.view);
-    glDrawElements(GL_TRIANGLES, mesh.triangleCount, GL_UNSIGNED_INT, 0);
-}
-
-void SDLRenderer::DrawSprite (const Camera &camera, const Sprite &sprite, const Shader &shader) {
+void SDLRenderer::DrawSprite(const glm::mat4 &transform, const glm::mat4 &camera, const Sprite &sprite, const Shader &shader) const {
     glEnable(GL_PROGRAM_POINT_SIZE);
     sprite.Bind();
     shader.Bind();
-    shader.SetMvpUniform(camera.view);
+    shader.SetTransformUniform(transform);
+    shader.SetCameraUniform(camera);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }

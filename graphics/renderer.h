@@ -3,6 +3,7 @@
 
 #include "glad/gl.h"
 #include "SDL.h"
+#include "glm/glm.hpp"
 
 struct Mesh;
 struct Sprite;
@@ -22,8 +23,7 @@ struct SDLRenderer {
     void Clear() const;
     void Present() const;
 
-    void Draw(const Camera &camera, const Mesh &mesh, const Shader &shader, const Texture &texture) const;
-    void DrawSprite(const Camera &camera, const Sprite &sprite, const Shader &shader);
+    void DrawSprite(const glm::mat4 &transform, const glm::mat4 &camera, const Sprite &sprite, const Shader &shader) const;
 };
 
 #ifdef SDL_OPENGL_GRAPHICS

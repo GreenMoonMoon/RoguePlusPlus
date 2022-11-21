@@ -50,15 +50,20 @@ Shader::Shader(const ShaderData &shaderData) {
     unsigned int vertexShader = Shader::compileShader(shaderData.vertexSource.c_str(), GL_VERTEX_SHADER);
     unsigned int fragmentShader = Shader::compileShader(shaderData.fragmentSource.c_str(), GL_FRAGMENT_SHADER);
     handle = Shader::linkProgram(vertexShader, fragmentShader);
-    mvpLocation = glGetUniformLocation(handle, "mvp");
+    transformLocation = glGetUniformLocation(handle, "transform");
+    cameraLocation = glGetUniformLocation(handle, "camera");
 }
 
 Shader::~Shader() {
     glDeleteProgram(handle);
 }
 
-void Shader::SetMvpUniform(const mat4 &mvp) const {
-    glUniformMatrix4fv(mvpLocation, 1, GL_FALSE, glm::value_ptr(mvp));
+void Shader::SetTransformUniform(const glm::mat4 &transform) const {
+    glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(transform));
+}
+
+void Shader::SetCameraUniform(const glm::mat4 &camera) const {
+    glUniformMatrix4fv(cameraLocation, 1, GL_FALSE, glm::value_ptr(camera));
 }
 
 void Shader::Bind() const {
