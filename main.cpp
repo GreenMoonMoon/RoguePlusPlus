@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
     // DEBUG PARTICLE
     world.scope<ParticleScope>([](){
         world.entity()
-        .set<Particle>({glm::vec2(1.0f), glm::vec2(1.0f), glm::vec2(0.0f)})
+        .set<Particle>({glm::vec2(1.0f), glm::vec2(0.0f, 20.0f), glm::vec2(0.0f)})
         .add<Sprite>();
     });
     // DEBUG
@@ -45,8 +45,8 @@ int main(int argc, char **argv) {
 
     world.system<Particle>()
             .kind(flecs::OnUpdate)
-            .each([](Particle &particle){
-                particle.position += particle.velocity;
+            .each([](flecs::iter &it, size_t, Particle &particle){
+                particle.position += particle.velocity * it.world().delta_time();
             });
 
     world.system<const Particle, const Sprite, const Camera>()
@@ -63,8 +63,9 @@ int main(int argc, char **argv) {
 
     while(isRunning) {
         renderer.Clear();
-        world.progress();
+        world.progress(renderer.DeltaTime);
         renderer.Present();
+        renderer.UpdateTime();
     }
 
     return 0;

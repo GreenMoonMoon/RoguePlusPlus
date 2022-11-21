@@ -15,6 +15,8 @@ struct SDLRenderer {
     SDL_Window *window;
     SDL_Renderer *renderer;
     SDL_GLContext context;
+    uint32_t previousTime = 0;
+    double DeltaTime = 0;
 
     SDLRenderer() : SDLRenderer(720, 576) {};
     SDLRenderer(int width, int height);
@@ -24,6 +26,8 @@ struct SDLRenderer {
     void Present() const;
 
     void DrawSprite(const glm::mat4 &transform, const glm::mat4 &camera, const Sprite &sprite, const Shader &shader) const;
+
+    void UpdateTime();
 };
 
 #ifdef SDL_OPENGL_GRAPHICS

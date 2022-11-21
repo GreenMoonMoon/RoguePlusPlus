@@ -4,7 +4,6 @@
 #include "shader.h"
 #include "mesh.h"
 #include "texture.h"
-#include "camera.h"
 
 
 GLenum glCheckError_(const char* file, int line) {
@@ -124,4 +123,11 @@ void SDLRenderer::DrawSprite(const glm::mat4 &transform, const glm::mat4 &camera
     shader.SetTransformUniform(transform);
     shader.SetCameraUniform(camera);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+}
+
+void SDLRenderer::UpdateTime() {
+    uint32_t currentTime = SDL_GetTicks();
+    DeltaTime = (currentTime - previousTime) / 1000.0;
+    if(DeltaTime > 0.16) DeltaTime = 0.16;
+    previousTime = currentTime;
 }
