@@ -38,6 +38,7 @@ struct Particle {
     glm::vec2 position;
     glm::vec2 velocity;
     glm::vec2 acceleration;
+    float radius = 1.0f;
     float mass = 1.0f;
 };
 
