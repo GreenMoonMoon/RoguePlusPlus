@@ -63,9 +63,8 @@ int main(int argc, char **argv) {
 
     while(isRunning) {
         renderer.Clear();
-        world.progress(renderer.DeltaTime);
+        world.progress(renderer.GetDeltaTime());
         renderer.Present();
-        renderer.UpdateTime();
     }
 
     return 0;

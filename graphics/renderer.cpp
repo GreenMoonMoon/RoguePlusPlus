@@ -125,9 +125,10 @@ void SDLRenderer::DrawSprite(const glm::mat4 &transform, const glm::mat4 &camera
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
 
-void SDLRenderer::UpdateTime() {
+double SDLRenderer::GetDeltaTime() {
     uint32_t currentTime = SDL_GetTicks();
-    DeltaTime = (currentTime - previousTime) / 1000.0;
-    if(DeltaTime > 0.16) DeltaTime = 0.16;
+    double deltaTime = (currentTime - previousTime) / 1000.0;
+    if(deltaTime > 0.16) deltaTime = 0.16;
     previousTime = currentTime;
+    return deltaTime;
 }

@@ -16,7 +16,6 @@ struct SDLRenderer {
     SDL_Renderer *renderer;
     SDL_GLContext context;
     uint32_t previousTime = 0;
-    double DeltaTime = 0;
 
     SDLRenderer() : SDLRenderer(720, 576) {};
     SDLRenderer(int width, int height);
@@ -27,7 +26,10 @@ struct SDLRenderer {
 
     void DrawSprite(const glm::mat4 &transform, const glm::mat4 &camera, const Sprite &sprite, const Shader &shader) const;
 
-    void UpdateTime();
+    /// Get the delta time since last call to this function.
+    /// IMPORTANT: this function should be called only once per update, otherwise the deltatime values will be broken.
+    /// \return delta time
+    double GetDeltaTime();
 };
 
 #ifdef SDL_OPENGL_GRAPHICS
